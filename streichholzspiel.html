@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>Das Streichholzspiel</title>
+<script type="text/javascript">
+
+/*
+Die Hauptfunktion mit der das Spiel gestartet wird.
+*/
+function Spiel() {
+  document.write("Herzlich willkommen bei diesem Streichholzspiel.<br> Bitte sage wieviele Streichhölzer du hinlegen willst. Danach beginnt das Spiel und du fängst an. <br>wähle zwischen 1-3 Streichhölzer. Danach ist der zweite Spieler an der Reihe.<br>Verloren hat wer das letzte Streichholz zieht! <br>Viel Erfolg!<br><br>");
+  var anzahl = "";
+  var spielerzug ="";
+  var spieler = "";
+  var ende = 1;
+  var gewinner = "";
+
+  anzahl = Startzahl(); //Festlegen der Startanzahl
+
+/*
+In der While-Schleife werden die Spielzüge durchgeführt. Sie widerholt sich solange wie die Variable anzahl nicht 0 erreicht.
+*/
+while (ende == "1")
+{ 
+  if (ende == "1") {
+  spieler = 1;
+  document.write("Es liegen "+anzahl+" Streichhoelzer da.<br> Spieler "+spieler+" ist am Zug.<br> ");
+  spielerzug = ziehen(anzahl, spieler); //Führt den Spielerzug aus
+  anzahl = zugtest(anzahl, spielerzug); //Testet ob anzahl die Variable 0 erreicht.
+  if ( anzahl == "0") { ende = 0; }
+
+}
+
+  if (ende == "1") {
+  spieler = 2;
+  document.write("Es liegen "+anzahl+" Streichhoelzer da.<br> Spieler "+spieler+" ist am Zug.<br> ");
+  spielerzug = ziehen(anzahl, spieler); //Führt den Spielerzug aus
+  anzahl = zugtest(anzahl, spielerzug); //Testet ob anzahl die Variable 0 erreicht.
+  if ( anzahl == "0") { ende = 0; }
+
+}}
+
+gewinner = spieler + 1;
+alert("Herzlichen Glückwunsch Spieler "+gewinner+" du hast gewonnen! Zum Neustart lade bitte die Seite neu.")
+ 
+ 
+}
+
+/*
+Diese Funktion legt den Startwert für das Spiel über eine Eingabemaske fest.
+*/
+function Startzahl() {
+  var Eingabe = "";
+  var zahltest = "1";
+  while (zahltest == "1") {
+  Eingabe = window.prompt("Wie viele Streichhoelzer sollen es sein?", "");
+  zahltest = testen(Eingabe); //Behandlung der Exceptions. tritt ein Exception auf erhöht sich die Variable zahltest.
+  if (zahltest > 1 ) { zahltest = 1;} else {zahltest = 0;}  // legt fest ob (im Fall eines Ecxeptions) der Abfragevorgang wiederholt oder der Code fortgesetzt wird.
+}
+  Eingabe = parseInt(Eingabe);
+  return Eingabe;
+}
+
+
+/*
+Diese Funktion ruft ein Eingabefeld auf in der der Spieler angibt wie viele Streichhölzer er ziehen will.
+*/
+
+function ziehen(wert, spielerzahl){
+  var Eingabe = "";
+  var zahltest = "1";
+  while (zahltest == "1") {
+  Eingabe = window.prompt("Du bist dran Spieler "+spielerzahl+" Wie viele Streichhoelzer willst du ziehen?", "");
+  zahltest = testen(Eingabe);
+  if (Eingabe > 3 ) { alert("Du darfst nur eine Zahl zwischen 1 und 3 waehlen"); zahltest++;} //ein spezieller Exception der nur für diese Abfrage püft ob der Wert größer als 3 ist.
+  if (zahltest > 1 ) { zahltest = 1;} else {zahltest = 0;} 
+    	}
+Eingabe = parseInt(Eingabe);
+alert("Du ziehst "+Eingabe+" Streichhoelzer.");
+document.write("Du ziehst "+Eingabe+" Streichhoelzer.<br> ")
+return Eingabe;
+}
+
+/*
+Diese Funktion prüft ob noch genug Streichhölzer für den Zug zur Verfügung stehen.
+*/
+
+function zugtest(vorgabe, zug) {
+  var test = vorgabe - zug;
+  if (test < 0) 
+  {alert("Du hast leider nicht genug Streichhölzer für diesen Zug. Bitte wähle eine andere Kombination.");}
+  else
+ { vorgabe = test; 
+  return vorgabe;
+ }
+}
+
+
+/*
+Diese Funktion behandelt die Excpeptions die bei der Eingabe auftreten können. 
+Getestet wird ob die Eingabe eine Zahl, ob sie 0, ob sie leer ist oder ob der Abbrechenbutton betätigt wurde. 
+*/
+function testen(Eingabetest) {
+  var testzahl = "1";
+  if (!isFinite(Eingabetest)) { alert("Du musst eine Zahl waehlen"); testzahl++;}
+  if (Eingabetest == "0") { alert("Du musst ein Streichholz nehmen"); testzahl++;}
+  if (Eingabetest == "") { alert("Du musst eine Zahl waehlen"); testzahl++;} 
+  if (Eingabetest == null) { alert("Du musst eine Zahl waehlen"); testzahl++;}
+return testzahl;
+}
+</script>
+</head>
+<body>
+<a href="javascript:Spiel()">Starte das Spiel</a>
+</body>
+</html>
